@@ -1,5 +1,8 @@
 FROM ubuntu:14.04
 
+ARG N2N_PORT=9000
+ENV N2N_PORT $N2N_PORT
+
 RUN apt-get update && \
     apt-get install -y \
     autoconf \
@@ -14,6 +17,6 @@ WORKDIR /root/n2n_v2_fork
 RUN make && make install
 RUN rm -rf /root/n2n_v2_fork
 
-EXPOSE 9000
+EXPOSE $N2N_PORT
 
-CMD ["/usr/sbin/supernode", "-l", "9000", "-v", "-f"]
+CMD ["/usr/sbin/supernode", "-l", "${N2N_PORT}", "-v", "-f"]
