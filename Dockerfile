@@ -12,6 +12,7 @@ WORKDIR /root
 RUN git clone https://github.com/lukablurr/n2n_v2_fork.git
 WORKDIR /root/n2n_v2_fork
 RUN make && make install
+RUN rm -rf /root/n2n_v2_fork
 
 EXPOSE 9000
 
