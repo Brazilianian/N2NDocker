@@ -1,22 +1,22 @@
-FROM ubuntu:14.04
+FROM alpine:3.20
 
 ARG N2N_PORT=9000
-ENV N2N_PORT $N2N_PORT
+ENV N2N_PORT=${N2N_PORT}
 
-RUN apt-get update && \
-    apt-get install -y \
+RUN apk add \
     autoconf \
-    build-essential \
-    libssl-dev \
+    alpine-sdk \
+    libressl-dev \
     git \
-    && rm -rf /var/lib/apt/lists/*
+    make \
+    linux-headers
 
 WORKDIR /root
 RUN git clone https://github.com/lukablurr/n2n_v2_fork.git
 WORKDIR /root/n2n_v2_fork
-RUN make && make install
+RUN make install
 RUN rm -rf /root/n2n_v2_fork
 
 EXPOSE $N2N_PORT
 
-CMD ["/usr/sbin/supernode", "-l", "${N2N_PORT}", "-v", "-f"]
+CMD ["sh", "-c", "/usr/sbin/supernode -l $N2N_PORT -v -f"]
