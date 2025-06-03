@@ -1,4 +1,4 @@
-FROM alpine:3.20
+FROM alpine:3.21.3
 
 ARG N2N_PORT=9000
 ENV N2N_PORT=${N2N_PORT}
